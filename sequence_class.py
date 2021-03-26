@@ -1,24 +1,21 @@
 """
 Description:
-    This script is run after `vep_cli.py`. It computes the disease impact
-    score for each variant based on DeepSEA and SeqWeaver predicted
-    difference scores, sorts the variants based on the disease impact scores,
-    and outputs the results as TSV files.
+    This script is run after `vep_cli.py`. It computes the sequence-class
+    level variant effect scores based on Sei prediction, sorts the variants
+    based on the maximum absolute scores across sequence classes and outputs
+    the results as TSV files.
 
 Usage:
-    sequence_class_projscores_computation.py <results-dir> <vcf>
-    sequence_class_projscores_computation.py -h | --help
+    sequence_class.py <results-dir> <vcf>
+    sequence_class.py -h | --help
 
 Options:
     <results-dir>    The results directory. Final outputs will be written to
                      a directory in <results-dir> called `final_outputs`.
                      The results directory was an input to `vep_cli.py` and
-                     should contain the `sei`, `seqweaver_human`, and
-                     `seqweaver_mouse` directories created from running
+                     should contain the `sei` directory created from running
                      `vep_cli.py`.
-    <vcf>            Name of VCF file. If you ran
-                     `annotate_vcf_with_gene_info.py`, use the resulting VCF
-                     from running that script.
+    <vcf>            Name of VCF file.
 
 """
 import os

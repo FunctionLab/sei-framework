@@ -1,8 +1,6 @@
 """
 Description:
-    CLI for variant effect prediction using DeepSEA and SeqWeaver from
-    Zhou, Park, & Theesfeld et al. (2019)
-    https://doi.org/10.1038/s41588-019-0420-0
+    CLI for variant effect prediction using Sei and sequence classes.
 
 Usage:
     vep_cli.py <vcf> <output-dir> [--genome=<hg>] [--cuda]
