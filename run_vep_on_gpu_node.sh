@@ -15,4 +15,5 @@ outdir="${2:-}"
 reference_fa="${3:-}"
 
 
-python -u vep_cli.py $vcf_filepath $outdir $reference_fa --cuda
+python -u vep_cli.py $vcf_filepath $outdir \
+                     --genome=$reference_fa --cuda

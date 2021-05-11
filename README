@@ -1,2 +1,4 @@
-The instructions can be accessed from this URL
-https://docs.google.com/document/d/1OHEpB6kaoaknsqI76Z2GJopbussdPMF_ZcmdpslPlVc/edit?usp=sharing
+Example command
+```
+sbatch run_vep_on_gpu_node.sh test.vcf <OUT-DIR> hg19
+```
