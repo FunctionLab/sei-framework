@@ -1,9 +1,9 @@
 """
 Description:
     This script is run after `vep_cli.py`. It computes the sequence-class
-    level variant effect scores based on Sei prediction, sorts the variants
-    based on the maximum absolute scores across sequence classes and outputs
-    the results as TSV files.
+    level variant effect scores based on Sei chromatin profile predictions,
+    sorts the variants based on the maximum absolute scores across sequence classes
+    and outputs the results as TSV files.
 
 Usage:
     sequence_class.py <results-dir> <vcf>
