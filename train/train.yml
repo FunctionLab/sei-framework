@@ -1,5 +1,5 @@
 ---
-ops: [train, evaluate]
+ops: [train]
 model: {
     path: ../model/sei.py,
     class: Sei,
@@ -18,7 +18,7 @@ sampler: !obj:selene_sdk.samplers.MultiFileSampler {
                     blacklist_regions: hg38
                 },
                 features: !obj:selene_sdk.utils.load_features_list {
-                    input_path: ./data/distinct_features.txt
+                    input_path: ./data/sei_chromatin_profiles.txt
                 },
                 test_holdout: [chr8, chr9],
                 validation_holdout: [chr10],
@@ -37,7 +37,7 @@ sampler: !obj:selene_sdk.samplers.MultiFileSampler {
                 blacklist_regions: hg38
             },
             features: !obj:selene_sdk.utils.load_features_list {
-                input_path: ./data/distinct_features.txt
+                input_path: ./data/sei_chromatin_profiles.txt
             },
             test_holdout: [chr8, chr9],
             validation_holdout: [chr10],
@@ -48,7 +48,7 @@ sampler: !obj:selene_sdk.samplers.MultiFileSampler {
     },
 
     features: !obj:selene_sdk.utils.load_features_list {
-        input_path:  ./data/distinct_features.txt
+        input_path:  ./data/sei_chromatin_profiles.txt
     }
 }
 train_model: !obj:selene_sdk.TrainModel {
@@ -66,7 +66,6 @@ train_model: !obj:selene_sdk.TrainModel {
         roc_auc: !import sklearn.metrics.roc_auc_score,
         average_precision: !import sklearn.metrics.average_precision_score
     },
-    #checkpoint_resume: ./models/best_model.pth.tar
 }
 output_dir: ./models 
 random_seed: 1447
