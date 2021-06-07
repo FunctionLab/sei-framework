@@ -1,22 +1,34 @@
 # Sei framework
-Welcome to the Sei framework repository! Sei is a framework for systematically predicting sequence regulatory activities and applying sequence information for understanding human genetics data. Sei provides a global map from any sequence to regulatory activities represented by 40 sequence classes, and each sequence class integrates over predictions for 21,907 chromatin profiles (transcription factor, histone marks, and chromatin accessibility profiles across a wide range of cell types).
+Welcome to the Sei framework repository! Sei is a framework for systematically predicting sequence regulatory activities and applying sequence information to human genetics data. Sei provides a global map from any sequence to regulatory activities, as represented by 40 sequence classes, and each sequence class integrates predictions for 21,907 chromatin profiles (transcription factor, histone marks, and chromatin accessibility profiles across a wide range of cell types).
 
 This repository can be used to run the Sei model and get the Sei chromatin profile and sequence class predictions for an input VCF file.
 
 ### Requirement
 
-Sei requires Python 3.6+ and python packages PyTorch and Selene. You can follow PyTorch installation instructions [here](https://pytorch.org/get-started/locally/). Selene installation instructions is available from the Selene [repository](https://github.com/FunctionLab/selene).
+Sei requires Python 3.6+ and python packages PyTorch and Selene. You can follow PyTorch installation steps [here](https://pytorch.org/get-started/locally/) and Selene installation steps [here](https://github.com/FunctionLab/selene).
 
 ## Variant effect prediction
 
 Sei predicts variant effects by comparing predictions from a pair of sequences carrying the reference allele and the alternative allele respectively. Our code provides both sequence-class level (40 classes) and chromatin profile-level (21,907 targets) predictions.
 
+### Setup
+
+
 ### Usage
 
+```
+sh run_pipeline.sh <example-vcf> <hg-version> <output-dir> [--cuda]
+```
 Example command
 ```
-sbatch run_vep_on_gpu_node.sh test.vcf <OUT-DIR> hg19
+sh run_pipeline.sh test.vcf hg19 test-output --cuda
 ```
+
+Arguments:
+- `<example-vcf>`: Input VCF file
+- `<hg-version>`: Reference FASTA. By default the framework accepts `hg19` or `hg38` coordinates.
+- `<output-dir>`: Path to output directory (will be created if does not exist)
+- `--cuda`: Optional, use this flag if running on a CUDA-enabled GPU.
 
 ### Outputs
 
