@@ -3,9 +3,12 @@ Welcome to the Sei framework repository! Sei is a framework for systematically p
 
 This repository can be used to run the Sei model and get the Sei chromatin profile and sequence class predictions for an input VCF file.
 
-### Requirement
+- [Sei chromatin profile and sequence class variant effect prediction](#variant-effect-prediction)
+- [Sei model training](#training)
 
-Sei requires Python 3.6+ and Python packages PyTorch (>1.0), Selene (>0.5.0), and `docopt`. You can follow PyTorch installation steps [here](https://pytorch.org/get-started/locally/) and Selene installation steps [here](https://github.com/FunctionLab/selene). Install `docopt` with pip or conda (e.g. `conda install docopt`)
+### Requirements
+
+Sei requires Python 3.6+ and Python packages PyTorch (>=1.0), Selene (>=0.5.0), and `docopt`. You can follow PyTorch installation steps [here](https://pytorch.org/get-started/locally/) and Selene installation steps [here](https://github.com/FunctionLab/selene). Install `docopt` with pip or conda (e.g. `conda install docopt`)
 
 ## Variant effect prediction
 
@@ -42,7 +45,7 @@ The two `*.tsv` files are the final formatted outputs, while the `chromatin-prof
 You can use the HDF5 files directly if desired, but please keep in mind that the variants will not be ordered in the same way as the TSV files. (Please see the corresponding `*_row_labels.txt` file, for the variant labels.) 
 
 
-###Sequence classes
+### Sequence classes
 
 Sequence classes are defined based on 30 million sequences tiling the genome and thus cover a wide range of sequence activities. To help interpretation, we grouped sequence classes into groups including P (Promoter), E (Enhancer), CTCF (CTCF-cohesin binding), TF (TF binding), PC (Polycomb-repressed), HET (Heterochromatin), TN (Transcription), and L (Low Signal) sequence classes. Please refer to our manuscript for a more detailed description of the sequence classes.
 
