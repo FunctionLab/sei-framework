@@ -12,25 +12,6 @@ model: {
 sampler: !obj:selene_sdk.samplers.MultiFileSampler {
     train_sampler: !obj:selene_sdk.samplers.dataloader.SamplerDataLoader {
         sampler: !obj:selene_sdk.samplers.RandomPositionsSampler {
-                target_path: ./data/sorted_sei_data.bed.gz,
-                reference_sequence: !obj:selene_sdk.sequences.Genome {
-                    input_path: ../resources/hg38_UCSC.fa,
-                    blacklist_regions: hg38
-                },
-                features: !obj:selene_sdk.utils.load_features_list {
-                    input_path: ./data/sei_chromatin_profiles.txt
-                },
-                test_holdout: [chr8, chr9],
-                validation_holdout: [chr10],
-                sequence_length: 4096,
-                center_bin_to_predict: [2048, 2049],
-                feature_thresholds: null,
-                save_datasets: []
-        },
-        num_workers: 16,
-        batch_size: 64,
-    },
-    validate_sampler: !obj:selene_sdk.samplers.RandomPositionsSampler {
             target_path: ./data/sorted_sei_data.bed.gz,
             reference_sequence: !obj:selene_sdk.sequences.Genome {
                 input_path: ../resources/hg38_UCSC.fa,
@@ -43,10 +24,28 @@ sampler: !obj:selene_sdk.samplers.MultiFileSampler {
             validation_holdout: [chr10],
             sequence_length: 4096,
             center_bin_to_predict: [2048, 2049],
-            mode: validate,
+            feature_thresholds: null,
             save_datasets: []
+        },
+        num_workers: 16,
+        batch_size: 64,
     },
-
+    validate_sampler: !obj:selene_sdk.samplers.RandomPositionsSampler {
+        target_path: ./data/sorted_sei_data.bed.gz,
+        reference_sequence: !obj:selene_sdk.sequences.Genome {
+            input_path: ../resources/hg38_UCSC.fa,
+            blacklist_regions: hg38
+        },
+        features: !obj:selene_sdk.utils.load_features_list {
+            input_path: ./data/sei_chromatin_profiles.txt
+        },
+        test_holdout: [chr8, chr9],
+        validation_holdout: [chr10],
+        sequence_length: 4096,
+        center_bin_to_predict: [2048, 2049],
+        mode: validate,
+        save_datasets: []
+    },
     features: !obj:selene_sdk.utils.load_features_list {
         input_path:  ./data/sei_chromatin_profiles.txt
     }

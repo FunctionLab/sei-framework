@@ -1,9 +1,10 @@
 # Sei framework
+
 Welcome to the Sei framework repository! Sei is a framework for systematically predicting sequence regulatory activities and applying sequence information to human genetics data. Sei provides a global map from any sequence to regulatory activities, as represented by 40 sequence classes, and each sequence class integrates predictions for 21,907 chromatin profiles (transcription factor, histone marks, and chromatin accessibility profiles across a wide range of cell types).
 
 This repository can be used to run the Sei model and get the Sei chromatin profile and sequence class predictions for an input VCF file.
 
-We also provide information and instructions for [how to train the Sei chromatin profile model](#train). 
+We also provide information and instructions for [how to train the Sei deep learning sequence model](#train). 
 
 ### Requirements
 
@@ -95,6 +96,6 @@ Sequence classes are defined based on 30 million sequences tiling the genome and
 
 ## Training
 
-The configuration file and script for running train is under the `train` directory. To run Sei deep learning sequence model training, you will need GPU computing capability (we run training on 4x Tesla V100 GPUs connected with NVLink). The training data can be downloaded by running the download script or manually download the training data tarball and extract the files. Before you download the training data, because the Sei training data contains processed files at Cistrome Project, please register at the [Cistrome site](http://cistrome.org/db/#/bdown), and make sure you agree with the term of usage.
+The configuration file and script for running train is under the `train` directory. To run Sei deep learning sequence model training, you will need GPU computing capability (we run training on 4x Tesla V100 GPUs connected with NVLink). The training data can be downloaded by running the download script (`train/download_data.sh`) or manually downloading the training data tarball and extracting the files. **NOTE**: because the Sei training data contains processed files from the Cistrome Project, please first agree to the Cistrome Project [terms of usage](http://cistrome.org/db/#/bdown) before downloading the data here. 
 
-The Sei training configuration YAML file is provided as the `train.yml` file. You can read more about the Selene configuration file here (https://selene.flatironinstitute.org/master/overview/cli.html#). We also provide an example SLURM script `train.sh` for submitting a training job to a cluster.
+The Sei training configuration YAML file is provided as the `train/train.yml` file. You can read more about the Selene command-line interface and configuration file formatting here (https://selene.flatironinstitute.org/master/overview/cli.html#). We also provide an example SLURM script `train.sh` for submitting a training job to a cluster.
