@@ -3,8 +3,7 @@ Welcome to the Sei framework repository! Sei is a framework for systematically p
 
 This repository can be used to run the Sei model and get the Sei chromatin profile and sequence class predictions for an input VCF file.
 
-- [Sei chromatin profile and sequence class variant effect prediction](#variant-effect-prediction)
-- [Sei model training](#training)
+We also provide information and instructions for [how to train the Sei chromatin profile model](#train). 
 
 ### Requirements
 
