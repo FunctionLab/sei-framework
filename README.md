@@ -5,7 +5,7 @@ This repository can be used to run the Sei model and get the Sei chromatin profi
 
 ### Requirement
 
-Sei requires Python 3.6+ and python packages PyTorch and Selene. You can follow PyTorch installation steps [here](https://pytorch.org/get-started/locally/) and Selene installation steps [here](https://github.com/FunctionLab/selene).
+Sei requires Python 3.6+ and Python packages PyTorch (>1.0), Selene (>0.5.0), and `docopt`. You can follow PyTorch installation steps [here](https://pytorch.org/get-started/locally/) and Selene installation steps [here](https://github.com/FunctionLab/selene). Install `docopt` with pip or conda (e.g. `conda install docopt`)
 
 ## Variant effect prediction
 
@@ -34,7 +34,7 @@ Arguments:
 
 The following files and directories will be outputted:
 -  `chromatin-profiles-hdf5`: directory
--  `chromatin_profiles_diffs.tsv`: chromatin profile prediction TSV file (**compressed if input has >10000 variants to limit the output file size**)
+-  `chromatin_profiles_diffs.tsv`: chromatin profile prediction TSV file (**Note:** output file will be compressed if input has >10000 variants)
 -  `sequence_classes_scores.tsv`: sequence class prediction TSV file 
 
 The two `*.tsv` files are the final formatted outputs, while the `chromatin-profiles-hdf5` directory contains the intermediate HDF5 and row label files outputted from Selene from running the Sei deep learning model. 
