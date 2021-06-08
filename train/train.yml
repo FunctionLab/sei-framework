@@ -9,7 +9,7 @@ model: {
     },
     non_strand_specific: mean
 }
-sampler: !obj:selene_sdk.samplers.MultiFileSampler {
+sampler: !obj:selene_sdk.samplers.MultiSampler {
     train_sampler: !obj:selene_sdk.samplers.dataloader.SamplerDataLoader {
         sampler: !obj:selene_sdk.samplers.RandomPositionsSampler {
             target_path: ./data/sorted_sei_data.bed.gz,
