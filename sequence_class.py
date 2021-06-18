@@ -140,15 +140,15 @@ if __name__ == "__main__":
     histone_inds = np.load(os.path.join(sei_dir, 'histone_inds.npy'))
 
     chromatin_profile_ref_adjust = chromatin_profile_ref.copy()
-    chromatin_profile_ref_adjust[:,histone_inds] = \
-        chromatin_profile_ref_adjust[:,histone_inds] * (
+    chromatin_profile_ref_adjust[:, histone_inds] = \
+        chromatin_profile_ref_adjust[:, histone_inds] * (
         (np.sum(chromatin_profile_ref[:, histone_inds], axis=1)*0.5 +
          np.sum(chromatin_profile_alt[:, histone_inds], axis=1)*0.5) /
         np.sum(chromatin_profile_ref[:, histone_inds], axis=1))[:, None]
 
     chromatin_profile_alt_adjust = chromatin_profile_alt.copy()
-    chromatin_profile_alt_adjust[:,histone_inds] = \
-        chromatin_profile_alt_adjust[:,histone_inds] * (
+    chromatin_profile_alt_adjust[:, histone_inds] = \
+        chromatin_profile_alt_adjust[:, histone_inds] * (
         (np.sum(chromatin_profile_ref[:, histone_inds], axis=1)*0.5 +
          np.sum(chromatin_profile_alt[:, histone_inds], axis=1)*0.5) /
         np.sum(chromatin_profile_alt[:, histone_inds], axis=1))[:, None]
