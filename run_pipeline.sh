@@ -24,7 +24,7 @@ cuda="${4:-}"
 mkdir -p $outdir
 
 vcf_basename=$(basename $vcf_filepath)
-cp $vcf_basename $outdir/
+cp $vcf_filepath $outdir/
 
 if [ "$cuda" = "--cuda" ]
 then
