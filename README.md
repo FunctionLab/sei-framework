@@ -16,10 +16,14 @@ Sei predicts variant effects by comparing predictions from a pair of sequences c
 
 ### Setup
 
-Please download and extract the trained Sei model and `resources` (containing hg19 and hg38 FASTA files) `.tar.gz` files before proceeding.  
+Please download and extract the trained Sei model and `resources` (containing hg19 and hg38 FASTA files) `.tar.gz` files before proceeding:
 
-- [Sei model](https://www.dropbox.com/s/4q4kixk4roxw3v2/sei_model.tar.gz?dl=0)
-- [Sei framework `resources` directory](https://www.dropbox.com/s/wam5tg6g3gpor5w/sei_framework_resources.tar.gz?dl=0)
+```
+sh ./download_data.sh
+```
+
+- [Sei model](https://doi.org/10.5281/zenodo.4906996)
+- [Sei framework `resources` directory](https://doi.org/10.5281/zenodo.4906961)
 
 ### Usage
 
@@ -104,7 +108,12 @@ Sequence classes are defined based on 30 million sequences tiling the genome and
 
 The configuration file and script for running train is under the `train` directory. To run Sei deep learning sequence model training, you will need GPU computing capability (we run training on 4x Tesla V100 GPUs connected with NVLink). 
 
-The training data is available [here](https://www.dropbox.com/s/lonq7o8uwft7sbg/sei_training_data.tar.gz?dl=0) should be downloaded and extracted into the `train` directory. **NOTE**: because the Sei training data contains processed files from the Cistrome Project, please first agree to the Cistrome Project [terms of usage](http://cistrome.org/db/#/bdown) before downloading the data. 
+The training data is available [here](https://doi.org/10.5281/zenodo.4907037) should be downloaded and extracted into the `train` directory. **NOTE**: because the Sei training data contains processed files from the Cistrome Project, please first agree to the Cistrome Project [terms of usage](http://cistrome.org/db/#/bdown) before downloading the data:
+
+```
+cd ./train
+sh ./download_data.sh  # in the train directory
+```
 
 The Sei training configuration YAML file is provided as the `train/train.yml` file. You can read more about the Selene command-line interface and configuration file formatting [here](https://selene.flatironinstitute.org/master/overview/cli.html#). We also provide an example SLURM script `train.sh` for submitting a training job to a cluster.
 
