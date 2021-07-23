@@ -117,47 +117,33 @@ sh ./download_data.sh  # in the train directory
 
 The Sei training configuration YAML file is provided as the `train/train.yml` file. You can read more about the Selene command-line interface and configuration file formatting [here](https://selene.flatironinstitute.org/master/overview/cli.html#). We also provide an example SLURM script `train.sh` for submitting a training job to a cluster.
 
-## Use Agreement
+## License
 
-If you are interested in obtaining the software for commercial use, please contact Office of Technology Licensing, Princeton University (Laurie Tzodikov 609-258-7256, tzodikov@princeton.edu, or Linda Jan, 609-258-3653, ljan@princeton.edu). For academic use, downloading or using the software means you agree with the following Academic Use SOFTWARE Agreement.
+If you are interested in obtaining the software for commercial use, please contact Office of Technology Licensing, Princeton University (Laurie Tzodikov 609-258-7256, tzodikov@princeton.edu, or Linda Jan, 609-258-3653, ljan@princeton.edu). 
 
 ```
-PRINCETON Academic Use SOFTWARE Agreement
-
-The Trustees of Princeton University, a non-profit educational corporation organized and existing under the
-laws of the State of New Jersey with its Office of Technology Licensing at 87 Prospect Avenue, Princeton NJ
-08544 (“PRINCETON”) is willing to make the Sei Framework Software (software for predicting chromatin profile and sequence class effects from sequence) (“SOFTWARE”) available to you
-(“RECIPIENT”) under the following terms and conditions: 
-
-1. The above SOFTWARE is the property of PRINCETON and is made available as a service to the research
-community. The SOFTWARE is a research tool still in the development stage and is being provided “as is”
-without any support, services or improvements. PRINCETON makes no representations and extends no
-warranties of any kind, and expressly disclaims any representations or warranties of any kind
-(including, but not limited to, any warranties of merchantability, fitness for a particular purpose, or
-non-infringement).
-2. The SOFTWARE will be used for teaching or not-for-profit research purposes only. The RECIPIENT agrees
-not to use the Software for commercial purposes, or for diagnosis, treatment, cure, prevention or mitigation of
-disease or any other conditions in man. The RECIPIENT agrees that the Software is not intended to substitute
-for care by a licensed healthcare professional.
-    3. The SOFTWARE will not be further distributed to others without PRINCETON’S prior written consent.
-    The RECIPIENT shall promptly refer any request for the SOFTWARE to PRINCETON.
-    4. RECIPIENT
-    acknowledges that any programs or software created based on the SOFTWARE will be considered a
-    derivative of SOFTWARE and owned by PRINCETON.
-    5. The RECIPIENT agrees to acknowledge the source of the SOFTWARE in any publications.
-    6. RECIPIENT will use the SOFTWARE in compliance with all applicable laws, policies and regulations
-    including, but not limited to, any approvals, informed consent, patient confidentiality principles and US
-    government and local export control regulations. RECIPIENT acknowledges that the SOFTWARE may
-    not be exported to Cuba, Iran, North Korea, or Syria.
-    7. In no event shall PRINCETON be responsible or liable to RECIPIENT or any third party for
-    RECIPIENT’s activities under or related to this Agreement, including RECIPIENT’S use of the
-    SOFTWARE. RECIPIENT agrees to indemnify, defend, and hold harmless PRINCETON (including its
-    trustees, officers, faculty, employees, students and agents), from and against any and all claims,
-    liabilities, or damages based on, arising out of, or relating to this Agreement, including RECIPIENT’s
-    use of the SOFTWARE or RECIPIENT’S breach of this Agreement.
-    8. All disputes regarding the construction, interpretation and the parties’ obligations under this Agreement
-    shall be governed by the laws of the State of New Jersey, notwithstanding any of that state’s laws to the
-    contrary. The venue and jurisdiction for the resolution of any such disputes shall be Mercer County,
-    New Jersey
+Copyright (c) [2021] [The Trustees of Princeton University, The Simons Foundation, Inc. and The University of Texas Southwestern Medical Center]
+All rights reserved.
+Redistribution and use in source and binary forms, with or without
+modification, are permitted for academic and research use only (subject to the limitations in the disclaimer below) provided that the following conditions are met:
+     * Redistributions of source code must retain the above copyright notice,
+     this list of conditions and the following disclaimer.
+     * Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in the
+     documentation and/or other materials provided with the distribution.
+     * Neither the name of the copyright holders nor the names of its
+     contributors may be used to endorse or promote products derived from this
+     software without specific prior written permission.
+NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY
+THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER
+IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
 ```
-
