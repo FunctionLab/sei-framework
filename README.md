@@ -119,7 +119,7 @@ The Sei training configuration YAML file is provided as the `train/train.yml` fi
 
 ## License
 
-If you are interested in obtaining the software for commercial use, please contact Office of Technology Licensing, Princeton University (Laurie Tzodikov 609-258-7256, tzodikov@princeton.edu, or Linda Jan, 609-258-3653, ljan@princeton.edu). 
+If you are interested in obtaining the software for commercial use, please contact Office of Technology Licensing, Princeton University (Laurie Tzodikov 609-258-7256, tzodikov@princeton.edu). 
 
 ```
 Copyright (c) [2021] [The Trustees of Princeton University, The Simons Foundation, Inc. and The University of Texas Southwestern Medical Center]
