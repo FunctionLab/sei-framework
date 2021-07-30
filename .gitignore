@@ -1,3 +1,4 @@
-model
+model/sei.pth
+model/*.npy
 resources
 train/data

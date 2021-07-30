@@ -1,0 +1,40 @@
+PC1 Polycomb / Heterochromatin
+L1 Low signal
+TN1 Transcription
+TN2 Transcription
+L2 Low signal
+E1 Stem cell
+E2 Multi-tissue
+E3 Brain / Melanocyte
+L3 Low signal
+E4 Multi-tissue
+TF1 NANOG / FOXA1
+HET1 Heterochromatin
+E5 B-cell-like
+E6 Weak epithelial
+TF2 CEBPB
+PC2 Weak Polycomb
+E7 Monocyte / Macrophage
+E8 Weak multi-tissue
+L4 Low signal
+TF3 FOXA1 / AR / ESR1
+PC3 Polycomb
+TN3 Transcription
+L5 Low signal
+HET2 Heterochromatin
+L6 Low signal
+P Promoter
+E9 Liver / Intestine
+CTCF CTCF-Cohesin
+TN4 Transcription
+HET3 Heterochromatin
+E10 Brain
+TF4 OTX2
+HET4 Heterochromatin
+L7 Low signal
+PC4 Polycomb / Bivalent stem cell Enh
+HET5 Centromere
+E11 T-cell
+TF5 AR
+E12 Erythroblast-like
+HET6 Centromere
