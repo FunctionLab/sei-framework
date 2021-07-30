@@ -119,6 +119,9 @@ The Sei training configuration YAML file is provided as the `train/train.yml` fi
 
 We also provide an example SLURM script `train.sh` for submitting a training job to a cluster.
 
+## Help 
+Please post in the Github issues or e-mail Kathy Chen (chen.kathleenm@gmail.com) with any questions about the repository, requests for more data, etc. 
+
 ## License
 
 If you are interested in obtaining the software for commercial use, please contact Office of Technology Licensing, Princeton University (Laurie Tzodikov 609-258-7256, tzodikov@princeton.edu). 
