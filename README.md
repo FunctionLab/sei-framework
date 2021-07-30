@@ -115,7 +115,7 @@ cd ./train
 sh ./download_data.sh  # in the train directory
 ```
 
-The Sei training configuration YAML file is provided as the `train/train.yml` file. You can read more about the Selene command-line interface and configuration file formatting [here](https://selene.flatironinstitute.org/master/overview/cli.html#). You must use Selene version >0.5.0 to train this model ([release notes](https://github.com/FunctionLab/selene/blob/0.5.0/RELEASE_NOTES.md)). 
+The Sei training configuration YAML file is provided as the `train/train.yml` file. You can read more about the Selene command-line interface and configuration file formatting [here](https://selene.flatironinstitute.org/master/overview/cli.html#). You must use Selene version >0.5.0 to train this model ([release notes](https://github.com/FunctionLab/selene/blob/master/RELEASE_NOTES.md)). 
 
 We also provide an example SLURM script `train.sh` for submitting a training job to a cluster.
 
