@@ -43,6 +43,8 @@ Arguments:
 
 We provide `test.vcf` (hg19 coordinates) so you can try running this command once you have installed all the requirements. Additionally, `run_pipeline.gpu_node.sh` is an example SLURM script with the same expected input arguments if you need to submit your job to a compute cluster. 
 
+**Additional note**: we have added the capability of predicting variant effects from a pair of sequences in the `vep_cli_seq.py` script in the [`vep_seq`](https://github.com/FunctionLab/sei-framework/tree/vep_seq) development branch of this repo.
+
 ### Outputs
 
 The following files and directories will be outputted:
@@ -54,7 +56,7 @@ The two `*.tsv` files are the final formatted outputs, while the `chromatin-prof
 
 You can use the HDF5 files directly if desired, but please keep in mind that the variants will not be ordered in the same way as the TSV files. (Please see the corresponding `*_row_labels.txt` file, for the variant labels.) 
 
-Note: we have now added the capability of predicting variant effects from a pair of sequences in the `vep_cli_seq.py` script in the `vep_seq` branch of this repo.
+
 
 ### Sequence classes
 
