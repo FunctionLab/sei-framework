@@ -54,6 +54,7 @@ The two `*.tsv` files are the final formatted outputs, while the `chromatin-prof
 
 You can use the HDF5 files directly if desired, but please keep in mind that the variants will not be ordered in the same way as the TSV files. (Please see the corresponding `*_row_labels.txt` file, for the variant labels.) 
 
+Note: we have now added the capability of predicting variant effects from a pair of sequences in the `vep_cli_seq.py` script in the `vep_seq` branch of this repo.
 
 ### Sequence classes
 
