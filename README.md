@@ -1,8 +1,14 @@
+![logo](images/logo.png)
+
+--
+
 # Sei framework
 
 Welcome to the Sei framework repository! Sei is a framework for systematically predicting sequence regulatory activities and applying sequence information to human genetics data. Sei provides a global map from any sequence to regulatory activities, as represented by 40 sequence classes, and each sequence class integrates predictions for 21,907 chromatin profiles (transcription factor, histone marks, and chromatin accessibility profiles across a wide range of cell types).
 
-This repository can be used to run the Sei model and get the Sei chromatin profile and sequence class predictions for an input VCF file.
+Sei is now published, you can read the manuscript [here](https://doi.org/10.1038/s41588-022-01102-2).
+
+This repository can be used to run the Sei model and get the Sei chromatin profile and sequence class predictions for input sequences or variants.
 
 We also provide information and instructions for [how to train the Sei deep learning sequence model](#training). 
 
@@ -54,9 +60,7 @@ The following files and directories will be outputted:
 
 The two `*.tsv` files are the final formatted outputs, while the `chromatin-profiles-hdf5` directory contains the intermediate HDF5 and row label files outputted from Selene from running the Sei deep learning model. 
 
-You can use the HDF5 files directly if desired, but please keep in mind that the variants will not be ordered in the same way as the TSV files. (Please see the corresponding `*_row_labels.txt` file, for the variant labels.) 
-
-
+You can use the HDF5 files directly if desired, but please keep in mind that the variants will not be ordered in the same way as the TSV files. (Please see the corresponding `*_row_labels.txt` files in `chromatin-profiles-hdf5`, for the variant labels.) 
 
 ### Sequence classes
 
@@ -111,14 +115,18 @@ Sequence classes are defined based on 30 million sequences tiling the genome and
 
 The configuration file and script for running train is under the `train` directory. To run Sei deep learning sequence model training, you will need GPU computing capability (we run training on 4x Tesla V100 GPUs connected with NVLink). 
 
-The training data is available [here](https://doi.org/10.5281/zenodo.4907037) should be downloaded and extracted into the `train` directory. **NOTE**: because the Sei training data contains processed files from the Cistrome Project, please first agree to the Cistrome Project [terms of usage](http://cistrome.org/db/#/bdown) before downloading the data:
+The training data is available [here](https://doi.org/10.5281/zenodo.4907037) should be downloaded and extracted into the `train` directory. 
+
+**NOTE**: because the Sei training data contains processed files from the Cistrome Project, please first agree to the Cistrome Project [terms of usage](http://cistrome.org/db/#/bdown) before downloading the data:
 
 ```
 cd ./train
 sh ./download_data.sh  # in the train directory
 ```
 
-The Sei training configuration YAML file is provided as the `train/train.yml` file. You can read more about the Selene command-line interface and configuration file formatting [here](https://selene.flatironinstitute.org/master/overview/cli.html#). You must use Selene version >0.5.0 to train this model ([release notes](https://github.com/FunctionLab/selene/blob/master/RELEASE_NOTES.md)). 
+The Sei training configuration YAML file is provided as the `train/train.yml` file. You can read more about the Selene command-line interface and configuration file formatting [here](https://selene.flatironinstitute.org/master/overview/cli.html#). 
+
+You must use Selene version >0.5.0 to train this model ([release notes](https://github.com/FunctionLab/selene/blob/master/RELEASE_NOTES.md)). 
 
 We also provide an example SLURM script `train.sh` for submitting a training job to a cluster.
 
