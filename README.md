@@ -1,4 +1,7 @@
-![logo](images/logo.png)
+<p align="center">
+  <img height="200" src="images/logo.png">
+</p>
+
 
 
 Welcome to the Sei framework repository! Sei is a framework for systematically predicting sequence regulatory activities and applying sequence information to human genetics data. Sei provides a global map from any sequence to regulatory activities, as represented by 40 sequence classes, and each sequence class integrates predictions for 21,907 chromatin profiles (transcription factor, histone marks, and chromatin accessibility profiles across a wide range of cell types).
