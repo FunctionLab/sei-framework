@@ -1,0 +1,4 @@
+- `sequence_class.py` no longer exists, need to update `run_pipeline.sh`
+- need new sequence prediction config
+- `sequence_class.from_seq_prediction.py` is not done
+- nothing is tested yet

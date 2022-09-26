@@ -29,13 +29,13 @@ cp $vcf_filepath $outdir/
 if [ "$cuda" = "--cuda" ]
 then
     echo "use_cuda: True"
-    python vep_cli.py "$outdir/$vcf_basename" \
+    python -u vep_cli.py "$outdir/$vcf_basename" \
                       $outdir \
                       --genome=${hg_version} \
                       --cuda
 else
     echo "use_cuda: False"
-    python vep_cli.py "$outdir/$vcf_basename" \
+    python -u vep_cli.py "$outdir/$vcf_basename" \
                       $outdir \
                       --genome=${hg_version}
 fi
