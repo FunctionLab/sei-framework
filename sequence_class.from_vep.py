@@ -6,19 +6,30 @@ Description:
     across sequence classes and outputs the results as TSV files.
 
 Usage:
-    sequence_class.from_vep.py <results-dir> <vcf> [--no-tsv]
+    sequence_class.from_vep.py <ref-fp> <alt-fp> <output-dir>
+                               [--out-name=<out-name>]
+                               [--no-tsv]
     sequence_class.from_vep.py -h | --help
 
 Options:
-    <results-dir>    The results directory.
-    <vcf>            Name of VCF file.
-    --no-tsv         The TSVs outputted sort the variants based on maximum
-                     absolute scores across sequence classes and are intended
-                     for easier perusal of the predictions for those more
-                     familiar with this file type, but makes this script take
-                     much longer to complete as a result. If you are comfortable
-                     working with HDF5 and NPY files, you can suppress the TSV
-                     output and use the files in `chromatin-profiles-hdf5`.
+    <ref-fp>               Reference sequence Sei predictions file. Assumes
+                           the row labels file is in the same directory. The resulting
+                           variant effect sequence class scores will be computed as
+                           alt - ref sequence class scores (adjusted for nucleosome
+                           occupancy).
+    <alt-fp>               Alternate sequence Sei predictions file.
+    <output-dir>           The directory to output the sequence class scores
+                           & TSVs (if `--no-tsv` is not used).
+    --out-name=<out-name>  Specify an output filename prefix that all outputted
+                           files will use. Otherwise, filenames will be based on
+                           <alt-fp>.
+    --no-tsv               The TSVs outputted sort the variants based on maximum
+                           absolute scores across sequence classes and are intended
+                           for easier perusal of the predictions for those more
+                           familiar with this file type, but makes this script take
+                           much longer to complete as a result. If you are comfortable
+                           working with HDF5 and NPY files, you can suppress the TSV
+                           output and use the files in `chromatin-profiles-hdf5`.
 
 """
 import os
@@ -38,27 +49,52 @@ if __name__ == "__main__":
     arguments = docopt(
         __doc__,
         version='1.0.0')
-    results_dir = arguments['<results-dir>']
-    input_vcf = arguments['<vcf>']
-    no_tsv = arguments['--no-tsv']
+    ref_pred_file = arguments['<ref-fp>']
+    alt_pred_file = arguments['<alt-fp>']
 
-    _, filename = os.path.split(input_vcf)
-    filename_prefix = '.'.join(filename.split('.')[:-1])
+    # load predictions
+    chromatin_profile_ref = get_data(ref_pred_file)
+    chromatin_profile_alt = get_data(alt_pred_file)
+    if len(chromatin_profile_ref) != len(chromatin_profile_alt):
+        raise ValueError(("{0} and {1} have different number of rows: {2} vs {3}, "
+                          "respectively.").format(ref_pred_file, alt_pred_file,
+                                                  len(chromatin_profile_ref),
+                                                  len(chromatin_profile_alt)))
+
+    ref_dir, _ = os.path.split(ref_pred_file)
+    alt_dir, _ = os.path.split(alt_pred_file)
+
+    # checks if the ref/alt are from variant effect prediction (VCF)
+    # or sequence prediction (BED or FASTA file inputs)
+    seq_from = None
+    alt_prefix = None
+    if '.ref_predictions' in ref_pred_file and '.alt_predictions' in alt_pred_file:
+        seq_from = 'VCF'
+        alt_prefix = os.path.basename(alt_pred_file).split('.alt_predictions')[0]
+    elif '.alt_predictions' in ref_pred_file and 'ref_predictions' in ref_pred_file:
+        seq_from = 'VCF'
+        alt_prefix = os.path.basename(alt_pred_file).split('.ref_predictions')[0]
+    elif '_predictions' in ref_pred_file and '_predictions' in alt_pred_file:
+        seq_from = 'BED/FASTA'
+        alt_prefix = os.path.basename(alt_pred_file).split('_predictions')[0]
+    rowlabels_file = os.path.join(alt_dir, '{0}_row_labels.txt'.format(alt_prefix))
+    rowlabels = pd.read_csv(rowlabels, sep='\t')
+    if len(rowlabels) != len(chromatin_profile_alt):
+        raise ValueError(("Rowlabels file '{0}' does not have the same number "
+                          "of rows as '{1}'").format(rowlabels_file, alt_pred_file))
+
+    output_dir = arguments['<output-dir>']
+
+    output_prefix = arguments['--out-name']
+    if output_prefix is None:
+        output_prefix = alt_prefix
+    print("Output files will start with {0}".format(output_prefix))
+
+    no_tsv = arguments['--no-tsv']
 
     sei_dir = "./model"
     chromatin_profiles = get_targets(os.path.join(sei_dir, "target.names"))
     seqclass_names = get_targets(os.path.join(sei_dir, "seqclass.names"))
-
-    profile_pred_dir = os.path.join(results_dir, 'chromatin-profiles-hdf5')
-    rowlabels_filename = "{0}_row_labels.txt".format(filename_prefix)
-    chromatin_profile_rowlabels = os.path.join(profile_pred_dir, rowlabels_filename)
-
-    chromatin_profile_ref = get_data(os.path.join(
-        profile_pred_dir,
-        "{0}.ref_predictions.h5".format(filename_prefix)))
-    chromatin_profile_alt = get_data(os.path.join(
-        profile_pred_dir,
-        "{0}.alt_predictions.h5".format(filename_prefix)))
 
     clustervfeat = np.load(os.path.join(sei_dir, 'projvec_targets.npy'))
     histone_inds = np.load(os.path.join(sei_dir, 'histone_inds.npy'))
@@ -70,7 +106,8 @@ if __name__ == "__main__":
         histone_inds)
     max_abs_diff = np.abs(diffproj).max(axis=1)
 
-    np.save(os.path.join(profile_pred_dir, "sequence_class_scores.npy"), diffproj)
+    np.save(os.path.join(output_dir, "sequence_class_scores.npy"), diffproj)
+
     if not no_tsv:
         write_to_tsv(max_abs_diff,  # max sequence class score
                      chromatin_profile_alt - chromatin_profile_ref,  # chromatin profile diffs
@@ -78,6 +115,6 @@ if __name__ == "__main__":
                      chromatin_profiles,  # chromatin profile targets
                      seqclass_names,  # sequence class names
                      read_rowlabels_file(chromatin_profile_rowlabels, use_strand=False),
-                     os.path.join(results_dir, "sorted.chromatin_profile_diffs.tsv"),
-                     os.path.join(results_dir, "sorted.sequence_class_scores.tsv"))
+                     os.path.join(output_dir, "sorted.chromatin_profile_diffs.tsv"),
+                     os.path.join(output_dir, "sorted.sequence_class_scores.tsv"))
 

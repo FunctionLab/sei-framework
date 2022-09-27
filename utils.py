@@ -26,25 +26,6 @@ def get_data(filename):
     return data
 
 
-def read_rowlabels_file(rowlabels, use_strand=False):
-    """
-    Read separate row labels file for variant effect prediction.
-    """
-    labels = []
-    with open(rowlabels, 'r') as file_handle:
-        for line in file_handle:
-            if 'contains_unk' in line:
-                continue
-            cols = line.strip().split('\t')
-            chrom, pos, id, ref, alt, strand, ref_match, contains_unk = cols
-            if not use_strand:
-                strand = '.'
-            labels.append(
-                (chrom, pos, id, ref, alt, strand,
-                 ref_match, contains_unk))
-    return labels
-
-
 def sc_projection(chromatin_profile_preds, clustervfeat):
     return (np.dot(chromatin_profile_pred, clustervfeat.T) /
             np.linalg.norm(clustervfeat, axis=1))
