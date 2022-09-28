@@ -6,10 +6,10 @@ Description:
     across sequence classes and outputs the results as TSV files.
 
 Usage:
-    sequence_class.from_vep.py <ref-fp> <alt-fp> <output-dir>
-                               [--out-name=<out-name>]
-                               [--no-tsv]
-    sequence_class.from_vep.py -h | --help
+    get_variant_effect_sc_score.py <ref-fp> <alt-fp> <output-dir>
+                                   [--out-name=<out-name>]
+                                   [--no-tsv]
+    get_variant_effect_sc_score.py -h | --help
 
 Options:
     <ref-fp>               Reference sequence Sei predictions file. Assumes
@@ -39,7 +39,7 @@ import h5py
 import numpy as np
 import pandas as pd
 
-from utils import get_targets, get_data
+from utils import get_filename_prefix, get_data, get_targets
 from utils import sc_hnorm_varianteffect
 from utils import write_to_tsv
 
@@ -60,22 +60,11 @@ if __name__ == "__main__":
                                                   len(chromatin_profile_ref),
                                                   len(chromatin_profile_alt)))
 
-    ref_dir, _ = os.path.split(ref_pred_file)
-    alt_dir, _ = os.path.split(alt_pred_file)
+    alt_dir, alt_fn = os.path.split(alt_pred_file)
 
     # checks if the ref/alt are from variant effect prediction (VCF)
     # or sequence prediction (BED or FASTA file inputs)
-    seq_from = None
-    alt_prefix = None
-    if '.ref_predictions' in ref_pred_file and '.alt_predictions' in alt_pred_file:
-        seq_from = 'VCF'
-        alt_prefix = os.path.basename(alt_pred_file).split('.alt_predictions')[0]
-    elif '.alt_predictions' in ref_pred_file and 'ref_predictions' in ref_pred_file:
-        seq_from = 'VCF'
-        alt_prefix = os.path.basename(alt_pred_file).split('.ref_predictions')[0]
-    elif '_predictions' in ref_pred_file and '_predictions' in alt_pred_file:
-        seq_from = 'BED/FASTA'
-        alt_prefix = os.path.basename(alt_pred_file).split('_predictions')[0]
+    alt_prefix = get_filename_prefix(alt_fn)
     rowlabels_file = os.path.join(alt_dir, '{0}_row_labels.txt'.format(alt_prefix))
     rowlabels = pd.read_csv(rowlabels_file, sep='\t')
     if len(rowlabels) != len(chromatin_profile_alt):

@@ -52,6 +52,19 @@ def sc_hnorm_varianteffect(chromatin_profile_ref, chromatin_profile_alt, cluster
     return diffproj
 
 
+def get_filename_prefix(filename):
+    """Filename must follow Selene output file conventions.
+    """
+    prefix = None
+    if '.alt_predictions' in filename:
+        prefix = filename.split('.alt_predictions')[0]
+    elif '.ref_predictions' in filename:
+        prefix = filename.split('.ref_predictions')[0]
+    else:
+        prefix = filename.split('_predictions')[0]
+    return prefix
+
+
 def write_to_tsv(max_abs_diff,
                  chromatin_profile_diffs,
                  sequence_class_projscores,
