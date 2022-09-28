@@ -27,7 +27,7 @@ def get_data(filename):
 
 
 def sc_projection(chromatin_profile_preds, clustervfeat):
-    return (np.dot(chromatin_profile_pred, clustervfeat.T) /
+    return (np.dot(chromatin_profile_preds, clustervfeat.T) /
             np.linalg.norm(clustervfeat, axis=1))
 
 
@@ -61,13 +61,13 @@ def write_to_tsv(max_abs_diff,
                  output_chromatin_profile_file,
                  output_sequence_class_file):
     sorted_sc_abs_diff = np.sort(max_abs_diff)[::-1]
-    sorted_maxsc_df = pd.DataFrame(sorted_sc_absdiff,  # dataframe
+    sorted_maxsc_df = pd.DataFrame(sorted_sc_abs_diff,  # dataframe
                                    columns=['seqclass_max_absdiff'])
 
     sorted_ixs = np.argsort(max_abs_diff)[::-1]
-
     assert len(sorted_ixs) == chromatin_profile_diffs.shape[0]
     sorted_rowlabels = rowlabels.iloc[sorted_ixs]  # dataframe
+    sorted_rowlabels.reset_index(inplace=True)
     rowlabel_columns = sorted_rowlabels.columns.tolist()
 
     # sorted now
@@ -83,15 +83,14 @@ def write_to_tsv(max_abs_diff,
                        axis=1)
     sc_df = pd.concat([sorted_maxsc_df, sorted_rowlabels, sorted_sc_df],
                       axis=1)
-
     sc_df[['seqclass_max_absdiff'] + rowlabel_columns + seqclass_names].to_csv(
         output_sequence_class_file, sep='\t', index=False)
 
-    if len(cp_df) > 10000:
-        cp_df[['seqclass_max_absdiff'] + rowlabel_columns + chromatin_profiles].to_csv(
+    if len(sei_df) > 10000:
+        sei_df[['seqclass_max_absdiff'] + rowlabel_columns + chromatin_profiles].to_csv(
             output_chromatin_profile_file, sep='\t', index=False, compression='gzip')
     else:
-        cp_df[['seqclass_max_absdiff'] + rowlabel_columns + chromatin_profiles].to_csv(
+        sei_df[['seqclass_max_absdiff'] + rowlabel_columns + chromatin_profiles].to_csv(
             output_chromatin_profile_file, sep='\t', index=False)
 
 

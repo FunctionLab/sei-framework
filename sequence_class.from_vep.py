@@ -40,7 +40,6 @@ import numpy as np
 import pandas as pd
 
 from utils import get_targets, get_data
-from utils import read_rowlabels_file
 from utils import sc_hnorm_varianteffect
 from utils import write_to_tsv
 
@@ -78,12 +77,13 @@ if __name__ == "__main__":
         seq_from = 'BED/FASTA'
         alt_prefix = os.path.basename(alt_pred_file).split('_predictions')[0]
     rowlabels_file = os.path.join(alt_dir, '{0}_row_labels.txt'.format(alt_prefix))
-    rowlabels = pd.read_csv(rowlabels, sep='\t')
+    rowlabels = pd.read_csv(rowlabels_file, sep='\t')
     if len(rowlabels) != len(chromatin_profile_alt):
         raise ValueError(("Rowlabels file '{0}' does not have the same number "
                           "of rows as '{1}'").format(rowlabels_file, alt_pred_file))
 
     output_dir = arguments['<output-dir>']
+    os.makedirs(output_dir, exist_ok=True)
 
     output_prefix = arguments['--out-name']
     if output_prefix is None:
@@ -106,7 +106,8 @@ if __name__ == "__main__":
         histone_inds)
     max_abs_diff = np.abs(diffproj).max(axis=1)
 
-    np.save(os.path.join(output_dir, "sequence_class_scores.npy"), diffproj)
+    np.save(os.path.join(
+        output_dir, "{0}.sequence_class_scores.npy".format(output_prefix)), diffproj)
 
     if not no_tsv:
         write_to_tsv(max_abs_diff,  # max sequence class score
@@ -114,7 +115,11 @@ if __name__ == "__main__":
                      diffproj,  # sequence class diffs
                      chromatin_profiles,  # chromatin profile targets
                      seqclass_names,  # sequence class names
-                     read_rowlabels_file(chromatin_profile_rowlabels, use_strand=False),
-                     os.path.join(output_dir, "sorted.chromatin_profile_diffs.tsv"),
-                     os.path.join(output_dir, "sorted.sequence_class_scores.tsv"))
+                     rowlabels,
+                     os.path.join(output_dir,
+                                  "sorted.{0}.chromatin_profile_diffs.tsv".format(
+                                      output_prefix)),
+                     os.path.join(output_dir,
+                                  "sorted.{0}.sequence_class_scores.tsv".format(
+                                      output_prefix)))
 
