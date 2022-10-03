@@ -12,9 +12,9 @@ Options:
     <vcf>                   Input FASTA or BED file.
     <output-dir>            Output directory
     --genome=<hg>           If <seq-input> is a BED file, specify the reference
-                              genome hg38 or hg19 [default: hg19]
+                            genome hg38 or hg19 [default: hg19]
     --cuda                  Run variant effect prediction on a CUDA-enabled
-                              GPU
+                            GPU
 
 """
 import os
@@ -56,7 +56,7 @@ if __name__ == "__main__":
     configs = load_path("./model/sei_seq_prediction.yml", instantiate=False)
     _finditem(configs, use_dir)
 
-    configs["prediction"].bind(input=seq_input, output_dir=sei_out)
+    configs["prediction"].update(input_path=seq_input, output_dir=sei_out)
     configs["analyze_sequences"].bind(use_cuda=use_cuda)
 
     if not seq_input.endswith('.fa') and not seq_input.endswith('.fasta'):
@@ -68,6 +68,5 @@ if __name__ == "__main__":
             configs["analyze_sequences"].bind(reference_sequence=genome)
         else:
             raise ValueError("--genome=<hg> must be 'hg19' or 'hg38'")
-
     parse_configs_and_run(configs)
 
