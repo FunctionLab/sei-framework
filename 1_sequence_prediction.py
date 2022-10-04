@@ -1,15 +1,16 @@
 """
 Description:
-    CLI for sequence prediction using the Sei deep learning model.
+    CLI for sequence prediction using the Sei deep learning model,
+    given an input FASTA or BED file.
     Outputs Sei chromatin profile predictions.
 
 Usage:
-    seq_prediction_cli.py <seq-input> <output-dir> [--genome=<hg>] [--cuda]
-    seq_prediction_cli.py -h | --help
+    1_sequence_prediction.py <seq-input> <output-dir> [--genome=<hg>] [--cuda]
+    1_sequence_prediction.py -h | --help
 
 Options:
     -h --help               Show this screen.
-    <vcf>                   Input FASTA or BED file.
+    <seq-input>             Input FASTA or BED file.
     <output-dir>            Output directory
     --genome=<hg>           If <seq-input> is a BED file, specify the reference
                             genome hg38 or hg19 [default: hg19]

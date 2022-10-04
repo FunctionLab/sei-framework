@@ -6,10 +6,10 @@ Description:
     across sequence classes and outputs the results as TSV files.
 
 Usage:
-    get_variant_effect_sc_score.py <ref-fp> <alt-fp> <output-dir>
-                                   [--out-name=<out-name>]
-                                   [--no-tsv]
-    get_variant_effect_sc_score.py -h | --help
+    2_varianteffect_sc_score.py <ref-fp> <alt-fp> <output-dir>
+                                [--out-name=<out-name>]
+                                [--no-tsv]
+    2_varianteffect_sc_score.py -h | --help
 
 Options:
     <ref-fp>               Reference sequence Sei predictions file. Assumes
@@ -77,7 +77,7 @@ if __name__ == "__main__":
     output_prefix = arguments['--out-name']
     if output_prefix is None:
         output_prefix = alt_prefix
-    print("Output files will start with {0}".format(output_prefix))
+    print("Output files will start with prefix '{0}'".format(output_prefix))
 
     no_tsv = arguments['--no-tsv']
 

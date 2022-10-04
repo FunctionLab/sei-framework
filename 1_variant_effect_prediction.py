@@ -4,8 +4,8 @@ Description:
     Outputs both Sei chromatin profile predictions and sequence class scores.
 
 Usage:
-    vep_cli.py <vcf> <output-dir> [--genome=<hg>] [--cuda]
-    vep_cli.py -h | --help
+    1_variant_effect_prediction.py <vcf> <output-dir> [--genome=<hg>] [--cuda]
+    1_variant_effect_prediction.py -h | --help
 
 Options:
     -h --help               Show this screen.

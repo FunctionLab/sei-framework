@@ -6,9 +6,9 @@ Description:
     across sequence classes and outputs the results as TSV files.
 
 Usage:
-    get_raw_sc_score.py <input-fp> <output-dir>
-                        [--out-name=<out-name>]
-    get_raw_sc_score.py -h | --help
+    2_raw_sc_score.py <input-fp> <output-dir>
+                      [--out-name=<out-name>]
+    2_raw_sc_score.py -h | --help
 
 Options:
     <input-fp>             Path to Sei sequence predictions to compute raw
@@ -54,7 +54,7 @@ if __name__ == "__main__":
     output_prefix = arguments['--out-name']
     if output_prefix is None:
         output_prefix = input_fn.split('_predictions')[0]
-    print("Output files will start with {0}".format(output_prefix))
+    print("Output files will start with prefix '{0}'".format(output_prefix))
 
     sei_dir = "./model"
     chromatin_profiles = get_targets(os.path.join(sei_dir, "target.names"))
