@@ -16,10 +16,6 @@ We also provide information and instructions for [how to train the Sei deep lear
 
 Sei requires Python 3.6+ and Python packages PyTorch (>=1.0), Selene (>=0.5.0), and `docopt`. You can follow PyTorch installation steps [here](https://pytorch.org/get-started/locally/) and Selene installation steps [here](https://github.com/FunctionLab/selene). Install `docopt` with pip or conda (e.g. `conda install docopt`)
 
-## Variant effect prediction
-
-Sei predicts variant effects by comparing predictions from a pair of sequences carrying the reference allele and the alternative allele respectively. Our code provides both sequence-class level (40 classes) and chromatin profile-level (21,907 targets) predictions.
-
 ### Setup
 
 Please download and extract the trained Sei model and `resources` (containing hg19 and hg38 FASTA files) `.tar.gz` files before proceeding:
@@ -31,38 +27,105 @@ sh ./download_data.sh
 - [Sei model](https://doi.org/10.5281/zenodo.4906996)
 - [Sei framework `resources` directory](https://doi.org/10.5281/zenodo.4906961)
 
-### Usage
 
+### Chromatin profile prediction
+
+1. The following scripts can be used to obtain Sei deep learning predictions for 21,907 chromatin profiles (please run on a GPU node):
+(1) `1_sequence_prediction.py` (and corresponding bash script, `1_sequence_prediction.sh`): Accepts either a BED (`.bed`) or FASTA (`.fa`, `.fasta`) file as input and makes sequence predictions.
+
+Example usage:
 ```
-sh run_pipeline.sh <example-vcf> <hg-version> <output-dir> [--cuda]
-```
-Example command 
-```
-sh run_pipeline.sh test.vcf hg19 test-output --cuda
+sh 1_sequence_prediction.sh <input-file> <genome> <output-dir> --cuda
 ```
 
 Arguments:
-- `<example-vcf>`: Input VCF file
-- `<hg-version>`: Reference FASTA. By default the framework accepts `hg19` or `hg38` coordinates.
+- `<input-file>`: BED or FASTA input file
+- `<genome>`: If you use a BED file as input, this must be either `hg19` or `hg38` as these are the FASTA reference genome files we provide by default. If you are using a FASTA file, you can specify whichever genome version you are using for logging purposes. 
 - `<output-dir>`: Path to output directory (will be created if does not exist)
 - `--cuda`: Optional, use this flag if running on a CUDA-enabled GPU.
 
-We provide `test.vcf` (hg19 coordinates) so you can try running this command once you have installed all the requirements. Additionally, `run_pipeline.gpu_node.sh` is an example SLURM script with the same expected input arguments if you need to submit your job to a compute cluster. 
+You can run `python 1_sequence_prediction.py -h` for the full documentation of inputs.
 
-**Additional note**: we have added the capability of predicting variant effects from a pair of sequences in the `vep_cli_seq.py` script in the [`vep_seq`](https://github.com/FunctionLab/sei-framework/tree/vep_seq) development branch of this repo.
+2. `1_variant_effect_prediction.py` (and corresponding bash script, `1_variant_effect_prediction.sh`): Accepts a VCF file as input and makes variant effect predictions.
 
-### Outputs
+Example usage:
+```
+sh 1_variant_effect_prediction.sh <vcf> <hg> <output-dir> [--cuda]
+```
 
-The following files and directories will be outputted:
--  `chromatin-profiles-hdf5`: directory
--  `chromatin_profiles_diffs.tsv`: chromatin profile prediction TSV file (**Note:** output file will be compressed if input has >10000 variants)
--  `sequence_classes_scores.tsv`: sequence class prediction TSV file 
+Arguments:
+- `<vcf>`: VCF file
+- `<hg>`: Either hg19 or hg38
+- `<output-dir>`: Path to output directory (will be created if does not exist)
+- `--cuda`: Optional, use this flag if running on a CUDA-enabled GPU.
 
-The two `*.tsv` files are the final formatted outputs, while the `chromatin-profiles-hdf5` directory contains the intermediate HDF5 and row label files outputted from Selene from running the Sei deep learning model. 
+You can run `python 1_variant_effect_prediction.py -h` for the full documentation of inputs.
 
-You can use the HDF5 files directly if desired, but please keep in mind that the variants will not be ordered in the same way as the TSV files. (Please see the corresponding `*_row_labels.txt` files in `chromatin-profiles-hdf5`, for the variant labels.) 
+These scripts will output the chromatin profile predictions as HDF5 files to a subdirectory `chromatin-profiles-hdf5` in your specified output directory. 
 
-### Sequence classes
+See `example_slurm_scripts/1_example_seqpred.slurm_gpu.sh` and `example_slurm_scripts/1_example_vep.slurm_gpu.sh` for sample scripts for running chromatin profile prediction on SLURM.
+
+
+### Sequence class prediction
+
+Sequence class scores can be obtained from Sei chromatin profile predictions. There are 2 types of scores that can be computed:
+
+- Raw sequence class scores: For sequences only. **Note** our manuscript uses the Louvain community clustering, whole-genome sequence class annotation of the human genome whenever we apply sequence classes to reference genome sequences, and we encourage the use of these annotations over the raw sequence class scores when possible. Sequence class annotations for hg38 and hg19 (lifted over from hg38) are available for download from [this Zenodo record](10.5281/zenodo.7113989). 
+- Sequence class variant effect score (nucleosome-occupancy-adjusted): For variants only. Computed as alt - ref of the raw sequence class scores **adjusted for nucleosome occupancy, i.e. histone normalized**. To better represent predicted variant effects on histone marks, it is necessary to normalize for nucleosome occupancy (for example, a LoF mutation near the TSS can decrease H3K4me3 modification level while increasing nucleosome occupancy, resulting in an overall increase in observed H3K4me3 quantity). Therefore, for variant effect computation, we used the sum of all histone profile predictions as an approximation to nucleosome occupancy and adjusted all histone mark predictions to remove the impact of nucleosome occupancy change (nonhistone mark predictions are unchanged). See manuscript methods for more detail.
+
+#### Sequence prediction
+
+Example usage:
+```
+sh 2_raw_sc_score.sh <input-file> <output-dir>
+```
+
+Arguments:
+- `<input-file>`: Path to the Sei `_predictions.h5` file.
+- `<output-dir>`: Path to output directory (will be created if does not exist)
+
+You can run `python 2_raw_sc_score.py -h` for the full documentation of inputs.
+
+#### Variant effect prediction
+
+Example usage:
+```
+sh 2_varianteffect_sc_score.sh <ref-fp> <alt-fp> <output-dir> [--no-tsv]
+```
+
+Arguments:
+- `<ref-fp>`: Path to the Sei `.ref_predictions.h5` file.
+- `<alt-fp>`: Path to the Sei `.alt_predictions.h5` file.
+- `<output-dir>`: Path to output directory (will be created if does not exist)
+- `--no-tsv`: Optional flag if you'd like to suppress the outputted TSV files (see the next section 'Example variant effect prediction run' for more information).
+
+You can run `python 2_varianteffect_sc_score.py -h` for the full documentation of inputs.
+
+### Example variant effect prediction run:
+
+We provide `test.vcf` (hg19 coordinates) so you can try running this command once you have installed all the requirements. Additionally, `example_slurm_scripts` contains example scripts with the same expected input arguments if you need to submit your job to a compute cluster. 
+
+Example command run on GPU:
+```
+sh 1_variant_effect_prediction.sh test.vcf hg19 ./test_outputs --cuda
+```
+
+Example command run on CPU:
+```
+sh 2_varianteffect_sc_score.sh ./test_outputs/chromatin-profiles-hdf5/test.ref_predictions.h5 \
+                               ./test_outputs/chromatin-profiles-hdf5/test.alt_predictions.h5 \
+                               ./test_outputs
+```
+You can add `--no-tsv` to this command to suppress the TSV file outputs if you are comfortable working with HDF5 and NPY files. Note you will need to match the rows to the `test_row_labels.txt` file in `./test_outputs/chromatin-profiles.hdf5` and the columns to `./model/target.names` (chromatin profile HDF5 files) and `./model/seqclass.names` (sequence class NPY file). 
+
+
+Expected outputs:
+-  `chromatin-profiles-hdf5`: directory containing HDF5 Sei predictions files and the corresponding `test_row_labels.txt` file. 
+- `sorted.test.chromatin_profile_diffs.tsv`: chromatin profile prediction TSV file (**Note:** output file will be compressed if input has >10000 variants), sorted by max absolute sequence class score. 
+- `sorted.test.sequence_class_scores.tsv`: sequence class prediction TSV file, sorted by max absolute sequence class scores.
+- `test.sequence_class_scores.npy`: sequence class scores NPY file, note this is NOT sorted and will be ordered in the same way as `chromatin-profiles-hdf5/test_row_labels.txt` file.
+
+## Sequence classes
 
 Sequence classes are defined based on 30 million sequences tiling the genome and thus cover a wide range of sequence activities. To help interpretation, we grouped sequence classes into groups including P (Promoter), E (Enhancer), CTCF (CTCF-cohesin binding), TF (TF binding), PC (Polycomb-repressed), HET (Heterochromatin), TN (Transcription), and L (Low Signal) sequence classes. Please refer to our manuscript for a more detailed description of the sequence classes.
 
