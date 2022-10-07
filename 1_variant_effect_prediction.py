@@ -69,5 +69,5 @@ if __name__ == "__main__":
 
     sei_out = os.path.join(arguments["<output-dir>"], "chromatin-profiles-hdf5")
     os.makedirs(sei_out, exist_ok=True)
-    run_config("./model/sei_prediction.yml", sei_out)
+    run_config("./model/sei_varianteffect_prediction.yml", sei_out)
 
