@@ -13,7 +13,7 @@
 # as part of output for this script) but do not leave it empty.
 
 # --cuda is optional, use if you are running on a CUDA-enabled
-# GPU machine (see 1_example_seqpred.slurm_gpu.sh)
+# GPU machine (see example_slurm_scripts/1_example_seqpred.slurm_gpu.sh)
 #####################################################################
 
 set -o errexit

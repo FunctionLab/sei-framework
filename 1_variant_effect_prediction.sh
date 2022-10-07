@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 
 ###############################################################
-# Example script for running the variant effect prediction
-# pipeline for Sei and sequence classes.
+# Example script for running Sei variant effect prediction
+# using Selene.
 
 # Usage:
-# sh run_pipeline.sh <vcf> <hg> <output-dir> [--cuda]
+# sh 1_variant_effect_prediction.sh <vcf> <hg> <output-dir> [--cuda]
 
 # Please only specify hg38 or hg19 as input for <hg>.
 
 # --cuda is optional, use if you are running on a CUDA-enabled
-# GPU machine (see 1_example_vep.slurm_gpu.sh)
+# GPU machine (see example_slurm_scripts/1_example_vep.slurm_gpu.sh)
 ###############################################################
 
 set -o errexit

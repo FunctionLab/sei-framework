@@ -2,8 +2,7 @@
 
 #####################################################################
 # Example script for computing the raw sequence class scores
-# given Sei sequence predictions (NO variant effect, not adjusted for
-# nucleosome occupancy)
+# given Sei chromatin profile sequence predictions
 
 # Usage:
 # sh 2_raw_sc_score.sh <input-file> <output-dir>

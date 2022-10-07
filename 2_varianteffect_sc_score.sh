@@ -2,7 +2,7 @@
 
 #####################################################################
 # Example script for computing the variant effect sequence class scores
-# given Sei sequence predictions
+# given Sei chromatin profile variant effect predictions
 
 # Usage:
 # sh 2_varianteffect_sc_score.sh <ref-fp> <alt-fp> <output-dir>

@@ -60,6 +60,7 @@ if __name__ == "__main__":
     configs["prediction"].update(input_path=seq_input, output_dir=sei_out)
     configs["analyze_sequences"].bind(use_cuda=use_cuda)
 
+    # Assumes BED file coordinates input if file doesn't end with .fa or .fasta
     if not seq_input.endswith('.fa') and not seq_input.endswith('.fasta'):
         hg_version = arguments["--genome"]
         genome = None

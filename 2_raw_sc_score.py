@@ -1,9 +1,8 @@
 """
 Description:
-    This script is run after `seq_prediction_cli.py`. It computes the
-    sequence class-level scores based on Sei chromatin profile predictions,
-    and by default, sorts the variants based on the maximum absolute scores
-    across sequence classes and outputs the results as TSV files.
+    This script is run after `1_sequence_prediction.py`. It computes the
+    raw sequence class scores based on Sei chromatin profile predictions
+    of sequences (i.e. no variants).
 
 Usage:
     2_raw_sc_score.py <input-fp> <output-dir>
@@ -14,10 +13,9 @@ Options:
     <input-fp>             Path to Sei sequence predictions to compute raw
                            sequence class projection scores (NO variant effect).
     <output-dir>           The directory to output the sequence class scores
-                           & TSVs (if `--no-tsv` is not used).
-    --out-name=<out-name>  Specify an output filename prefix that all outputted
-                           files will use. Otherwise, filenames will be based on
-                           <input-fp>.
+                           as an .NPY file.
+    --out-name=<out-name>  Specify an output filename prefix. Otherwise, output
+                           filenames will be based on <input-fp>.
 
 """
 import os
