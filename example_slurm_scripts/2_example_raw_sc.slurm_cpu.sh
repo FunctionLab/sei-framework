@@ -8,4 +8,4 @@
 input_preds="${1:-}"    # input preds path
 outdir="${2:-}"         # output dir path
 
-sh ../2_raw_sc_score.sh $input_preds $outdir
+sh ./2_raw_sc_score.sh $input_preds $outdir

@@ -15,4 +15,4 @@ input_filepath="${1:-}"  # path to input bed/fasta file
 genome_version="${2:-}"  # genome version
 outdir="${3:-}"          # path to output dir
 
-sh ../1_sequence_prediction.sh $input_filepath $genome_version $outdir --cuda
+sh ./1_sequence_prediction.sh $input_filepath $genome_version $outdir --cuda

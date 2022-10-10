@@ -10,4 +10,4 @@ alt_preds="${2:-}"    # alt preds path
 outdir="${3:-}"       # output dir path
 no_tsv="${4:-}"       # --no-tsv flag
 
-sh ../2_varianteffect_sc_score.sh $ref_preds $alt_preds $outdir $no_tsv
+sh ./2_varianteffect_sc_score.sh $ref_preds $alt_preds $outdir $no_tsv

@@ -15,4 +15,4 @@ vcf_filepath="${1:-}"  # path to vcf file
 hg_version="${2:-}"    # hg19 or hg38
 outdir="${3:-}"        # path to output dir
 
-sh ../1_variant_effect_prediction.sh $vcf_filepath $hg_version $outdir --cuda
+sh ./1_variant_effect_prediction.sh $vcf_filepath $hg_version $outdir --cuda
