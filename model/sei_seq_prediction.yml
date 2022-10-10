@@ -14,10 +14,9 @@ analyze_sequences: !obj:selene_sdk.predict.AnalyzeSequences {
     features: !obj:selene_sdk.utils.load_features_list {
         input_path: <PATH>/model/target.names
     },
-    write_mem_limit: 100000
+    write_mem_limit: 1000
 }
-variant_effect_prediction: {
-    save_data: [predictions],
+prediction:  {
     output_format: hdf5
 }
 random_seed: 999

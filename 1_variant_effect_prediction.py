@@ -1,11 +1,12 @@
 """
 Description:
-    CLI for variant effect prediction using the Sei deep learning model.
-    Outputs both Sei chromatin profile predictions and sequence class scores.
+    CLI for variant effect prediction using the Sei deep learning model,
+    given an input VCF file.
+    Outputs Sei chromatin profile predictions.
 
 Usage:
-    vep_cli.py <vcf> <output-dir> [--genome=<hg>] [--cuda]
-    vep_cli.py -h | --help
+    1_variant_effect_prediction.py <vcf> <output-dir> [--genome=<hg>] [--cuda]
+    1_variant_effect_prediction.py -h | --help
 
 Options:
     -h --help               Show this screen.
@@ -69,5 +70,5 @@ if __name__ == "__main__":
 
     sei_out = os.path.join(arguments["<output-dir>"], "chromatin-profiles-hdf5")
     os.makedirs(sei_out, exist_ok=True)
-    run_config("./model/sei_prediction.yml", sei_out)
+    run_config("./model/sei_varianteffect_prediction.yml", sei_out)
 

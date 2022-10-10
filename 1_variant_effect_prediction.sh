@@ -1,15 +1,16 @@
 #!/usr/bin/env bash
 
 ###############################################################
-# Example script for running the variant effect prediction
-# pipeline for Sei and sequence classes.
+# Example script for running Sei variant effect prediction
+# using Selene.
 
-# sh run_pipeline.sh <vcf> <hg> <output-dir> --cuda
+# Usage:
+# sh 1_variant_effect_prediction.sh <vcf> <hg> <output-dir> [--cuda]
 
 # Please only specify hg38 or hg19 as input for <hg>.
 
 # --cuda is optional, use if you are running on a CUDA-enabled
-# GPU machine
+# GPU machine (see example_slurm_scripts/1_example_vep.slurm_gpu.sh)
 ###############################################################
 
 set -o errexit
@@ -23,21 +24,23 @@ cuda="${4:-}"
 
 mkdir -p $outdir
 
+echo "Input arguments: $vcf_filepath $hg_version $outdir $cuda"
+
 vcf_basename=$(basename $vcf_filepath)
 cp $vcf_filepath $outdir/
 
 if [ "$cuda" = "--cuda" ]
 then
     echo "use_cuda: True"
-    python vep_cli.py "$outdir/$vcf_basename" \
-                      $outdir \
-                      --genome=${hg_version} \
-                      --cuda
+    python -u 1_variant_effect_prediction.py \
+        "$outdir/$vcf_basename" \
+        $outdir \
+        --genome=${hg_version} \
+        --cuda
 else
     echo "use_cuda: False"
-    python vep_cli.py "$outdir/$vcf_basename" \
-                      $outdir \
-                      --genome=${hg_version}
+    python -u 1_variant_effect_prediction.py \
+        "$outdir/$vcf_basename" \
+        $outdir \
+        --genome=${hg_version}
 fi
-
-python sequence_class.py $outdir "$vcf_basename"
